@@ -25,10 +25,11 @@ _Construire une application front permettant de consommer l'api appartenant à c
 
 ## 🏗 Construit avec
 
-- [Vite](https://nodejs.org/en/](https://vitejs.dev/guide/)
+- [Vite](https://nodejs.org/en/](https://vitejs.dev/guide)
 - [React](https://expressjs.com/](https://react.dev/](https://react.dev/)
-- [Typescript](https://cli.vuejs.org/guide/creating-a-project.html](https://www.typescriptlang.org/fr/docs/)
+- [Typescript](https://cli.vuejs.org/guide/creating-a-project.html](https://www.typescriptlang.org/fr/docs)
 - [Tailwind css](https://tailwindcss.com/docs/installation)
+- [Vite](https://nodejs.org/en/](https://vitejs.dev/guide)
 
 
 ## Mon environnement de code et mes outils
