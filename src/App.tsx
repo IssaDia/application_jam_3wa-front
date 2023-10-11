@@ -10,6 +10,7 @@ function App() {
 
   return (
     <>
+      <h1 className="text-3xl text-right font-bold underline">Hello world!</h1>
       <div className="row mt-4">
         <div className="col-12 mt-4" id="content">
           <div className="row">
