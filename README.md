@@ -28,6 +28,7 @@ _Construire une application front permettant de consommer l'api appartenant à c
 - [Vite]([https://nodejs.org/en/](https://vitejs.dev/guide/))
 - [React]([https://expressjs.com/](https://react.dev/)
 - [Typescript]([https://cli.vuejs.org/guide/creating-a-project.html](https://www.typescriptlang.org/fr/docs/))
+- [Tailwind css](https://tailwindcss.com/docs/installation)
 
 
 ## Mon environnement de code et mes outils
