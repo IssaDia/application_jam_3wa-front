@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { CartContext } from "../cart/context/CartContext";
 
-const Card = ({ image, title, price }) => {
-  const [quantity, setQuantity] = useState(1);
+const Card = ({ image, title, price, product }) => {
+  const [quantity, setQuantity] = useState(0);
+
+  const { dispatch, state } = useContext(CartContext);
 
   const handleAdd = () => {
-    setQuantity(quantity + 1);
+    setQuantity((prev) => prev + 1);
   };
 
   const handleRemove = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+    if (quantity > 0) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+
+  const handleAddToCart = (product, quantity) => {
+    if (quantity > 0) {
+      dispatch({ type: "ADD_TO_CART", payload: { product, quantity } });
     }
   };
 
@@ -51,10 +60,7 @@ const Card = ({ image, title, price }) => {
           </div>
           <button
             className="bg-blue-500 text-white px-4 py-2 ml-4 rounded-lg"
-            onClick={() => {
-              // Handle the 'Ajouter' button action
-              // You can add the product to the cart here
-            }}
+            onClick={() => handleAddToCart(product, quantity)}
           >
             Ajouter
           </button>

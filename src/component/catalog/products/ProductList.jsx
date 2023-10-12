@@ -12,7 +12,6 @@ const ProductList = () => {
   if (isError) {
     return <p>Error loading products</p>;
   }
-  console.log(products);
   const productsArray = products["hydra:member"];
 
   return (
@@ -24,6 +23,7 @@ const ProductList = () => {
             image={product.image}
             title={product.name}
             price={product.price}
+            product={product}
           />
         </div>
       ))}

@@ -1,4 +1,14 @@
+import { useContext } from "react";
+import { CartContext } from "../cart/context/CartContext";
+
 const Navbar = () => {
+  const { state } = useContext(CartContext);
+  console.log(state);
+  const totalQuantity = state.cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <nav className="bg-gray-800 p-4 flex justify-between items-center">
       {/* Left Section */}
@@ -31,6 +41,7 @@ const Navbar = () => {
         <a href="/cart">
           <i className="fas fa-shopping-cart text-white text-2xl"></i>
         </a>
+        <span className="text-white"> ({totalQuantity})</span>
       </div>
     </nav>
   );
