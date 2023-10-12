@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import ProductContext from "./context/ProductContext";
+import Card from "../../ui/Card";
 
 const ProductList = () => {
   const { products, isLoading, isError } = useContext(ProductContext);
@@ -11,17 +12,21 @@ const ProductList = () => {
   if (isError) {
     return <p>Error loading products</p>;
   }
-
-  console.log("products", products["hydra:member"]);
+  console.log(products);
+  const productsArray = products["hydra:member"];
 
   return (
-    <div>
-      {/* {products.map((product) => (
-        <div key={product.id}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
+    <div className="grid grid-cols-3 gap-4">
+      {productsArray.map((product) => (
+        <div key={product.id} className="w-full">
+          <Card
+            key={product.id}
+            image={product.image}
+            title={product.name}
+            price={product.price}
+          />
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };
