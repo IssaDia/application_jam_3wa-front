@@ -1,4 +1,4 @@
-function Navbar() {
+const Navbar = () => {
   return (
     <nav className="bg-gray-800 p-4 flex justify-between items-center">
       {/* Left Section */}
@@ -34,6 +34,6 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
