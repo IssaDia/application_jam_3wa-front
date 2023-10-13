@@ -1,21 +1,21 @@
 import { useContext } from "react";
 import { CartContext } from "../cart/context/CartContext";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const { state } = useContext(CartContext);
-  console.log(state);
-  const totalQuantity = state.cart.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  // const { state } = useContext(CartContext);
+  // const totalQuantity = state.cart.reduce(
+  //   (total, item) => total + item.quantity,
+  //   0
+  // );
 
   return (
     <nav className="bg-gray-800 p-4 flex justify-between items-center">
       {/* Left Section */}
       <div className="space-x-4 flex items-center">
-        <a href="/" className="text-white hover:text-gray-300 ">
+        <NavLink to="/" className="text-white hover:text-gray-300 ">
           <span className="text-2xl">🍓</span> JAM
-        </a>
+        </NavLink>
       </div>
 
       {/* Middle Section - Search Bar */}
@@ -32,16 +32,16 @@ const Navbar = () => {
 
       {/* Right Section */}
       <div className="space-x-4 flex items-center">
-        <a href="/login" className="text-white hover:text-gray-300">
+        <NavLink to="/login" className="text-white hover:text-gray-300">
           Connexion
-        </a>
-        <a href="/register" className="text-white hover:text-gray-300">
+        </NavLink>
+        <NavLink to="/register" className="text-white hover:text-gray-300">
           Inscription
-        </a>
-        <a href="/cart">
+        </NavLink>
+        <NavLink to="/cart">
           <i className="fas fa-shopping-cart text-white text-2xl"></i>
-        </a>
-        <span className="text-white"> ({totalQuantity})</span>
+        </NavLink>
+        {/* <span className="text-white"> ({totalQuantity})</span> */}
       </div>
     </nav>
   );
