@@ -3,11 +3,12 @@ import { CartContext } from "../cart/context/CartContext";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  // const { state } = useContext(CartContext);
-  // const totalQuantity = state.cart.reduce(
-  //   (total, item) => total + item.quantity,
-  //   0
-  // );
+  const { state } = useContext(CartContext);
+
+  const totalQuantity = state.cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <nav className="bg-gray-800 p-4 flex justify-between items-center">
@@ -41,7 +42,7 @@ const Navbar = () => {
         <NavLink to="/cart">
           <i className="fas fa-shopping-cart text-white text-2xl"></i>
         </NavLink>
-        {/* <span className="text-white"> ({totalQuantity})</span> */}
+        <span className="text-white"> ({totalQuantity})</span>
       </div>
     </nav>
   );

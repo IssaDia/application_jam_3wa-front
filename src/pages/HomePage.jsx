@@ -41,16 +41,12 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <CartContext.Provider value={{ state, dispatch }}>
-        <ProductContext.Provider value={{ products, isLoading, isError }}>
-          <div className="flex container">
-            <div className="w-1/3">2</div>
-            <div className="w-2/3">
-              <ProductList />
-            </div>
-          </div>
-        </ProductContext.Provider>
-      </CartContext.Provider>
+      <div className="flex container">
+        <div className="w-1/3">2</div>
+        <div className="w-2/3">
+          <ProductList />
+        </div>
+      </div>
     </>
   );
 };
