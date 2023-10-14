@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginValidationSchema as validationSchema } from "../validationSchema";
+import { loginUser } from "../../catalog/products/services/LoginService";
 
 const initialValues = {
   email: "",
@@ -8,8 +9,18 @@ const initialValues = {
 };
 
 const Login = () => {
-  const handleSubmit = (values, { setSubmitting }) => {
-    // Handle login logic here with values.email and values.password
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await loginUser(values);
+
+      if (response.success) {
+        // Handle successful login, e.g., store the token in local storage
+      } else {
+        // Handle login error
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (

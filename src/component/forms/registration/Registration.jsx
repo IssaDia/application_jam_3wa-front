@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registerValidationSchema as validationSchema } from "../validationSchema";
+import { registerUser } from "../../catalog/products/services/RegisterService";
 
 const initialValues = {
   email: "",
@@ -10,8 +11,19 @@ const initialValues = {
 };
 
 const Register = () => {
-  const handleSubmit = (values, { setSubmitting }) => {
-    // Handle registration logic here with values.email, values.password, and values.agreeTerms
+  const handleSubmit = async (values, { setSubmitting }) => {
+    console.log(values);
+    try {
+      const response = await registerUser(values); // Use the registerUser function
+
+      if (response.success) {
+        // Handle successful registration, e.g., navigate to the login page
+      } else {
+        // Handle registration error
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+    }
   };
 
   return (

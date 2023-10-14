@@ -6,32 +6,23 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./component/nav/Navbar";
-import { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { cartReducer, CartContext } from "./component/cart/context/CartContext";
 import ProductContext from "./component/catalog/products/context/ProductContext";
-import { fetchProducts } from "./component/catalog/products/services/productService";
+import useFetchProducts from "./hooks/useFetchProducts";
+import ProductApiClient from "./api/ApiPlatform/ProductProvider";
+import { ProductUseCaseImpl } from "./usecases/useCases";
 
 const initialState = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  useEffect(() => {
-    fetchProducts()
-      .then((data) => {
-        setProducts(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsError(true);
-        setIsLoading(false);
-      });
-  }, []);
+  const productApiClient = new ProductApiClient();
+  const productUseCase = new ProductUseCaseImpl(productApiClient);
+  const { products, isLoading, isError } = useFetchProducts(productUseCase);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
@@ -39,12 +30,14 @@ const App = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <CartContext.Provider value={{ state, dispatch }}>
         <ProductContext.Provider value={{ products, isLoading, isError }}>
           <BrowserRouter>
-            <NavLink to="/cart">Home</NavLink>
-            <Navbar />
+            <nav>
+              <NavLink to="/cart">Home</NavLink>
+              <Navbar />
+              {/* {test} */}
+            </nav>
             <main>
               <Routes>
                 <Route path="/" element={<HomePage />} />
