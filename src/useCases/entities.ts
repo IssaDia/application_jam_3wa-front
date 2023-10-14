@@ -1,9 +1,16 @@
+enum UserRole {
+  ROLE_ADMIN = "ROLE_ADMIN",
+  ROLE_USER = "ROLE_USER",
+}
+
 export interface User {
-  // Define the properties of a user
+  id: number;
+  email: string;
+  roles: UserRole[];
 }
 
 export interface AuthResponse {
-  // Define the structure of an authentication response
+  tokenType: string; // Type of the token (e.g., "Bearer")
 }
 
 export interface Product {
