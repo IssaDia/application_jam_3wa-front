@@ -6,11 +6,16 @@ enum UserRole {
 export interface User {
   id: number;
   email: string;
-  roles: UserRole[];
+  roles?: UserRole.ROLE_USER;
 }
 
 export interface AuthResponse {
-  tokenType: string; // Type of the token (e.g., "Bearer")
+  token: string;
+}
+export interface RegistrationResponse {
+  success: boolean;
+  user?: User;
+  error?: string;
 }
 
 export interface Product {

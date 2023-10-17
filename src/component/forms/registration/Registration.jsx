@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registerValidationSchema as validationSchema } from "../validationSchema";
-import { registerUser } from "../../catalog/products/services/RegisterService";
+import AuthContext from "../../auth/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -11,16 +12,19 @@ const initialValues = {
 };
 
 const Register = () => {
-  const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
-    try {
-      const response = await registerUser(values); // Use the registerUser function
+  let navigate = useNavigate();
+  const { register } = useContext(AuthContext);
 
-      if (response.success) {
-        // Handle successful registration, e.g., navigate to the login page
-      } else {
-        // Handle registration error
-      }
+  const handleSubmit = async ({ email, password }, { setSubmitting }) => {
+    console.log(email, password);
+    const newUser = {
+      email,
+      password,
+      roles: ["ROLE_USER"],
+    };
+    try {
+      await register(newUser);
+      navigate("/");
     } catch (error) {
       console.error("Registration error:", error);
     }

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginValidationSchema as validationSchema } from "../validationSchema";
-import { loginUser } from "../../catalog/products/services/LoginService";
+import AuthContext from "../../auth/context/AuthContext";
 
 const initialValues = {
   email: "",
@@ -9,15 +9,12 @@ const initialValues = {
 };
 
 const Login = () => {
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const response = await loginUser(values);
+  const { login } = useContext(AuthContext);
 
-      if (response.success) {
-        // Handle successful login, e.g., store the token in local storage
-      } else {
-        // Handle login error
-      }
+  const handleSubmit = async (values, { setSubmitting }) => {
+    console.log(values.email);
+    try {
+      const response = await login(values.email, values.password);
     } catch (error) {
       console.error("Login error:", error);
     }
