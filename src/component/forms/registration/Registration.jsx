@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registerValidationSchema as validationSchema } from "../validationSchema";
-import AuthContext from "../../auth/context/AuthContext";
+import { AuthUseCaseImpl } from "../../../useCases/useCases";
+import AuthApiClient from "../../../api/ApiPlatform/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const initialValues = {
@@ -12,8 +14,11 @@ const initialValues = {
 };
 
 const Register = () => {
+  const authApiClient = new AuthApiClient();
+  const authUseCase = new AuthUseCaseImpl(authApiClient);
+
   let navigate = useNavigate();
-  const { register } = useContext(AuthContext);
+  const { register } = useAuth(authUseCase);
 
   const handleSubmit = async ({ email, password }, { setSubmitting }) => {
     console.log(email, password);

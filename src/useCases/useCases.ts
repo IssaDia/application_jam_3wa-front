@@ -1,13 +1,12 @@
 import { ApiClient } from "../api/dataProvider";
 import { User, AuthResponse, Product, RegistrationResponse } from "./entities";
 
-export interface LoginUseCase {
+export interface AuthUseCase {
   login(email: string, password: string): Promise<AuthResponse>;
-}
-
-export interface RegisterUseCase {
   register(data: User): Promise<RegistrationResponse>;
 }
+
+// export interface RegisterUseCase {}
 
 export interface ProductUseCase {
   getProducts(): Promise<Product[]>;
@@ -25,12 +24,13 @@ export class ProductUseCaseImpl implements ProductUseCase {
   }
 }
 
-export class LoginUseCaseImpl implements LoginUseCase {
+export class AuthUseCaseImpl implements AuthUseCase {
   constructor(private apiClient: ApiClient) {}
 
   async login(email: string, password: string): Promise<AuthResponse> {
     try {
       const result = await this.apiClient?.loginUser?.(email, password);
+
       if (result) {
         return result;
       } else {
@@ -40,10 +40,6 @@ export class LoginUseCaseImpl implements LoginUseCase {
       throw new Error("Failed to log in: " + error.message);
     }
   }
-}
-
-export class RegisterUseCaseImpl implements RegisterUseCase {
-  constructor(private apiClient: ApiClient) {}
 
   async register(data: User): Promise<RegistrationResponse> {
     try {

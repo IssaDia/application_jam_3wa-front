@@ -4,7 +4,7 @@ import { CartContext } from "../cart/context/CartContext";
 const Card = ({ image, title, price, product }) => {
   const [quantity, setQuantity] = useState(0);
 
-  const { dispatch, state } = useContext(CartContext);
+  const { dispatch: cartDispatch } = useContext(CartContext);
 
   const handleAdd = () => {
     setQuantity((prev) => prev + 1);
@@ -18,7 +18,7 @@ const Card = ({ image, title, price, product }) => {
 
   const handleAddToCart = (product, quantity) => {
     if (quantity > 0) {
-      dispatch({ type: "ADD_TO_CART", payload: { product, quantity } });
+      cartDispatch({ type: "ADD_TO_CART", payload: { product, quantity } });
     }
   };
 

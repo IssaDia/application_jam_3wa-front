@@ -9,6 +9,13 @@ export interface User {
   roles?: UserRole.ROLE_USER;
 }
 
+export interface AuthenticatedUser {
+  iat: number;
+  exp: number;
+  roles: UserRole;
+  username: string;
+}
+
 export interface AuthResponse {
   token: string;
 }

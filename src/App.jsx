@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
@@ -8,40 +8,50 @@ import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./component/nav/Navbar";
 import { useEffect, useReducer } from "react";
 import { cartReducer, CartContext } from "./component/cart/context/CartContext";
-import AuthContext from "./component/auth/context/AuthContext";
+import { authReducer, AuthContext } from "./component/auth/context/AuthContext";
+
 import ProductContext from "./component/catalog/products/context/ProductContext";
 import useFetchProducts from "./hooks/useFetchProducts";
-import useAuth from "./hooks/useAuth";
 import ProductApiClient from "./api/ApiPlatform/ProductProvider";
-import {
-  ProductUseCaseImpl,
-  LoginUseCaseImpl,
-  RegisterUseCaseImpl,
-} from "./usecases/useCases";
-import AuthApiClient from "./api/ApiPlatform/AuthProvider";
+import { ProductUseCaseImpl } from "./usecases/useCases";
+
+import jwt_decode from "jwt-decode";
 
 const initialState = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
+const authInitialState = {
+  token: null,
+  user: null,
+  isAuthenticated: false,
+};
+
 const App = () => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [authState, authDispatch] = useReducer(authReducer, authInitialState);
 
   const productApiClient = new ProductApiClient();
-  const authApiClient = new AuthApiClient();
   const productUseCase = new ProductUseCaseImpl(productApiClient);
-  const loginUseCase = new LoginUseCaseImpl(authApiClient);
-  const registerUseCase = new RegisterUseCaseImpl(authApiClient);
   const { products, isLoading, isError } = useFetchProducts(productUseCase);
-  const { user, login, register } = useAuth(loginUseCase, registerUseCase);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(state.cart));
-  }, [state.cart]);
+    dispatch("LOAD_CART");
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decodedUser = jwt_decode(token);
+      const expirationTime = decodedUser.exp * 1000;
+
+      if (expirationTime < Date.now()) {
+        authDispatch({ type: "LOGOUT" });
+      }
+    }
+  }, [state]);
 
   return (
     <>
-      <AuthContext.Provider value={{ user, login, register }}>
+      <AuthContext.Provider value={{ authState, authDispatch }}>
         <CartContext.Provider value={{ state, dispatch }}>
           <ProductContext.Provider value={{ products, isLoading, isError }}>
             <BrowserRouter>

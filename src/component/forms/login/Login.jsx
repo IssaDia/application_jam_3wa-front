@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginValidationSchema as validationSchema } from "../validationSchema";
-import AuthContext from "../../auth/context/AuthContext";
+import { AuthUseCaseImpl } from "../../../useCases/useCases";
+import useAuth from "../../../hooks/useAuth";
+import AuthApiClient from "../../../api/ApiPlatform/AuthProvider";
+import { AuthContext } from "../../auth/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -9,12 +13,20 @@ const initialValues = {
 };
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const authApiClient = new AuthApiClient();
+  const authUseCase = new AuthUseCaseImpl(authApiClient);
+
+  let navigate = useNavigate();
+
+  const { login } = useAuth(authUseCase);
+  const { authDispatch } = useContext(AuthContext);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values.email);
     try {
-      const response = await login(values.email, values.password);
+      const { token, user } = await login(values.email, values.password);
+      authDispatch({ type: "LOGIN", payload: { token, user } });
+      localStorage.setItem("token", token);
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
     }
