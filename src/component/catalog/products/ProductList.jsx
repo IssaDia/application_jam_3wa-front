@@ -1,9 +1,22 @@
-import { useContext } from "react";
-import ProductContext from "./context/ProductContext";
+import { useContext, useEffect, useState } from "react";
+import { ProductContext } from "./context/ProductContext";
 import Card from "../../ui/Card";
+import SearchContext from "../../search/context/SearchContext";
 
 const ProductList = () => {
-  const { products, isLoading, isError } = useContext(ProductContext);
+  const { isLoading, isError } = useContext(ProductContext);
+  const { searchState } = useContext(SearchContext);
+  const { productState } = useContext(ProductContext);
+
+  let productsList = productState.products;
+
+  if (searchState.filtering) {
+    productsList = searchState.filteredProducts;
+  }
+
+  if (searchState.filtering && searchState.filteredProducts.length === 0) {
+    return <p>No matches found</p>;
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -12,11 +25,10 @@ const ProductList = () => {
   if (isError) {
     return <p>Error loading products</p>;
   }
-  const productsArray = products["hydra:member"];
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {productsArray.map((product) => (
+      {productsList.map((product) => (
         <div key={product.id} className="w-full">
           <Card
             key={product.id}

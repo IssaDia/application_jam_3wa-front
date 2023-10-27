@@ -9,18 +9,18 @@ const initialState = {
 };
 
 const HomePage = () => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  // const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      dispatch({ type: "LOAD_CART", payload: JSON.parse(savedCart) });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedCart = localStorage.getItem("cart");
+  //   if (savedCart) {
+  //     dispatch({ type: "LOAD_CART", payload: JSON.parse(savedCart) });
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(state.cart));
-  }, [state.cart]);
+  // useEffect(() => {
+  //   localStorage.setItem("cart", JSON.stringify(state.cart));
+  // }, [state.cart]);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../cart/context/CartContext";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../auth/context/AuthContext";
+import Searchbar from "../search/Searchbar";
 
 const Navbar = () => {
   const { state } = useContext(CartContext);
@@ -20,24 +21,15 @@ const Navbar = () => {
           <span className="text-2xl">🍓</span> JAM
         </NavLink>
       </div>
-
       {/* Middle Section - Search Bar */}
-      <div className="flex items-center">
-        <input
-          type="text"
-          placeholder="Recherche"
-          className="bg-gray-700 text-white px-2 py-1"
-        />
-        <button className="bg-gray-700 text-white px-2 py-1">
-          <i className="fas fa-search"></i>
-        </button>
-      </div>
-
+      <Searchbar />
       {/* Right Section */}
       <div className="space-x-4 flex items-center">
         {authState?.isAuthenticated ? (
           <>
-            <span className="text-white">Hello, {authState.user.username}</span>
+            <span className="text-white">
+              Hello, {authState.user?.username}
+            </span>
             <NavLink to="/cart">
               <i className="fas fa-shopping-cart text-white text-2xl"></i>
             </NavLink>
