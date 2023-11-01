@@ -103,3 +103,6 @@ npm run test
 
 ## 📑 A améliorer
 
+### Filtres
+
+Améliorer la coordination entre les filtres
