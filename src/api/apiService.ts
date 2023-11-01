@@ -1,10 +1,10 @@
 export const apiRequest = async (
-  endpoint,
+  endpoint: any,
   method = "GET",
-  data = null,
-  token
+  data: any,
+  token: any
 ) => {
-  const headers = {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
 
@@ -12,9 +12,12 @@ export const apiRequest = async (
     headers.Authorization = `Bearer ${token}`;
   }
 
+  let body: string | undefined;
+
   const requestOptions = {
     method,
     headers,
+    body,
   };
 
   if (method === "POST" && data) {
@@ -36,7 +39,7 @@ export const apiRequest = async (
     } else {
       throw new Error(json.error || "Request failed");
     }
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.message || "Request failed");
   }
 };

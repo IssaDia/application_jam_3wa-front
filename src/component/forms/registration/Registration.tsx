@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registerValidationSchema as validationSchema } from "../validationSchema";
 import { AuthUseCaseImpl } from "../../../useCases/useCases";
@@ -20,7 +19,13 @@ const Register = () => {
   let navigate = useNavigate();
   const { register } = useAuth(authUseCase);
 
-  const handleSubmit = async ({ email, password }, { setSubmitting }) => {
+  const handleSubmit = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
     console.log(email, password);
     const newUser = {
       email,

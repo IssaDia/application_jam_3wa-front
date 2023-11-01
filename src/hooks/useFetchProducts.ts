@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { ProductUseCase, ProductUseCaseImpl } from "../useCases/useCases";
+import { ProductUseCaseImpl } from "../useCases/useCases";
 import { Product } from "../useCases/entities";
 import ProductApiClient from "../api/ApiPlatform/ProductProvider";
 
 const useFetchProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [productsFromApi, setProductsFromApi] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -15,7 +15,7 @@ const useFetchProducts = () => {
     const fetchData = async () => {
       try {
         const data = await productUseCase.getProducts();
-        setProducts(data["hydra:member"]);
+        setProductsFromApi(data["hydra:member"]);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -26,7 +26,7 @@ const useFetchProducts = () => {
     fetchData();
   }, []);
 
-  return { products, isLoading, isError };
+  return { productsFromApi, isLoading, isError };
 };
 
 export default useFetchProducts;

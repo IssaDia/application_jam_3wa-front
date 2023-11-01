@@ -1,30 +1,34 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "./context/ProductContext";
 import Card from "../../ui/Card";
-import SearchContext from "../../search/context/SearchContext";
+import FilterContext from "../../filter/context/FilterContext";
+
+const filterInitialState = {
+  filteredProducts: [],
+  categories: [],
+};
 
 const ProductList = () => {
-  const { isLoading, isError } = useContext(ProductContext);
-  const { searchState } = useContext(SearchContext);
-  const { productState } = useContext(ProductContext);
+  const { products, isFiltering } = useContext(ProductContext);
+  const { filterState } = useContext(FilterContext);
 
-  let productsList = productState.products;
+  let productsList = products;
 
-  if (searchState.filtering) {
-    productsList = searchState.filteredProducts;
+  if (isFiltering) {
+    productsList = filterState.filteredProducts;
   }
 
-  if (searchState.filtering && searchState.filteredProducts.length === 0) {
+  if (isFiltering && filterState.filteredProducts.length === 0) {
     return <p>No matches found</p>;
   }
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (productState.isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (isError) {
-    return <p>Error loading products</p>;
-  }
+  // if (productState.isError) {
+  //   return <p>Error loading products</p>;
+  // }
 
   return (
     <div className="grid grid-cols-3 gap-4">

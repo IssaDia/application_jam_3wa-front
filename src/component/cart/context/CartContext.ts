@@ -6,6 +6,7 @@ type CartItem = {
   name: string;
   price: number;
   quantity: number;
+  image: string;
   // Add other fields as needed
 };
 
@@ -27,13 +28,13 @@ const loadCartFromLocalStorage = () => {
 };
 
 export const CartContext = createContext<{
-  state: CartState;
-  dispatch: React.Dispatch<CartAction>;
+  cartState: CartState;
+  cartDispatch: React.Dispatch<CartAction>;
 }>({
-  state: {
+  cartState: {
     cart: loadCartFromLocalStorage(),
   },
-  dispatch: () => {},
+  cartDispatch: () => {},
 });
 
 export const cartReducer = (

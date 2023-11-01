@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../cart/context/CartContext";
 
 const Card = ({ image, title, price, product }) => {
   const [quantity, setQuantity] = useState(0);
 
-  const { dispatch: cartDispatch } = useContext(CartContext);
+  const { cartDispatch } = useContext(CartContext);
 
   const handleAdd = () => {
     setQuantity((prev) => prev + 1);

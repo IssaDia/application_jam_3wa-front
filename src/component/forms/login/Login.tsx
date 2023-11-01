@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginValidationSchema as validationSchema } from "../validationSchema";
 import { AuthUseCaseImpl } from "../../../useCases/useCases";
@@ -21,7 +21,7 @@ const Login = () => {
   const { login } = useAuth(authUseCase);
   const { authDispatch } = useContext(AuthContext);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values: any) => {
     try {
       const { token, user } = await login(values.email, values.password);
       authDispatch({ type: "LOGIN", payload: { token, user } });

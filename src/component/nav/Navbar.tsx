@@ -5,10 +5,10 @@ import { AuthContext } from "../auth/context/AuthContext";
 import Searchbar from "../search/Searchbar";
 
 const Navbar = () => {
-  const { state } = useContext(CartContext);
+  const { cartState } = useContext(CartContext);
   const { authState, authDispatch } = useContext(AuthContext);
 
-  const totalQuantity = state.cart.reduce(
+  const totalQuantity = cartState.cart.reduce(
     (total, item) => total + item.quantity,
     0
   );

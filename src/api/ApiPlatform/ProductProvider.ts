@@ -1,6 +1,6 @@
 import { ApiClient } from "../dataProvider";
 import { Product } from "../../useCases/entities";
-import { withApiMiddleware } from "../middleware.js";
+import { withApiMiddleware } from "../middleware";
 import { apiRequest } from "../apiService.js";
 
 class ProductApiClient implements ApiClient {

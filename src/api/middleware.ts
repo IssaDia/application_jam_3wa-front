@@ -1,6 +1,6 @@
 import AuthApiClient from "./ApiPlatform/AuthProvider";
 
-export function withApiMiddleware(interactor) {
+export function withApiMiddleware(interactor: any) {
   return async function () {
     try {
       const authApiClient = new AuthApiClient();
@@ -11,7 +11,7 @@ export function withApiMiddleware(interactor) {
         const result = await interactor(response.token);
         return result;
       }
-    } catch (error) {
+    } catch (error: any) {
       // Handle API errors
       throw new Error(error);
     }

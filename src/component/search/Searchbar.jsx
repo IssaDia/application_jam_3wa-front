@@ -1,17 +1,17 @@
 import { useContext, useEffect } from "react";
 import useFetchProducts from "../../hooks/useFetchProducts";
 import { ProductContext } from "../catalog/products/context/ProductContext";
-import SearchContext from "./context/SearchContext";
-
+import FilterContext from "../filter/context/FilterContext";
 const Searchbar = () => {
-  const { searchDispatch } = useContext(SearchContext);
-  const { productState } = useContext(ProductContext);
-
-  const products = productState.products;
+  const { filterDispatch } = useContext(FilterContext);
+  const { products } = useContext(ProductContext);
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
-    searchDispatch({ type: "FILTER", payload: { inputValue, products } });
+    filterDispatch({
+      type: "FILTER",
+      payload: { inputValue, filter_type: "search" },
+    });
   };
 
   return (
