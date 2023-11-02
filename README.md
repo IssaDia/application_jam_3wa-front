@@ -105,5 +105,5 @@ npm run test
 
 ### Filtres
 
-Améliorer la coordination entre les filtres
-Mise en place de Docker pour faciliter l'accés à l'application
+- Améliorer la coordination entre les filtres
+- Mise en place de Docker pour faciliter l'accés à l'application
