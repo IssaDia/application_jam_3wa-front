@@ -44,6 +44,7 @@ export const cartReducer = (
   switch (action.type) {
     case "ADD_TO_CART":
       const { product, quantity } = action.payload;
+      console.log(typeof quantity);
 
       if (!state.cart || state.cart.length === 0) {
         const updatedCart = [{ ...product, quantity }];

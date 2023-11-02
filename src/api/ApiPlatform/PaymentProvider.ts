@@ -1,23 +1,15 @@
 import { ApiClient } from "../dataProvider";
-import { PaymentMethod, PaymentResponse } from "../../useCases/entities"; // Adjust the import based on your entity definition
+import { Product } from "../../useCases/entities";
 import { withApiMiddleware } from "../middleware";
 import { apiRequest } from "../apiService";
 
 class PaymentApiClient implements ApiClient {
-  async handlePayment(paymentMethod: PaymentMethod): Promise<PaymentResponse> {
+  async handlePayment(cart: Product[]): Promise<string> {
     try {
       const paymentEndpoint = "/checkout";
 
-      console.log("request", paymentMethod);
-
       const paymentRequest = withApiMiddleware(async (token: string) => {
-        const response = await apiRequest(
-          paymentEndpoint,
-          "POST",
-          paymentMethod,
-          token
-        );
-        return response as PaymentResponse;
+        return await apiRequest(paymentEndpoint, "POST", { cart: cart }, token);
       });
 
       return await paymentRequest();

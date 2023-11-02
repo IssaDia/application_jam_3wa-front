@@ -43,7 +43,6 @@ const PriceFilter = () => {
       },
     });
     if (!checked) {
-      // If the switch is turned off, reset the price filter
       setIsFiltering(!isFiltering);
       setPriceRange({ min: minimumPrice, max: maximumPrice });
       filterDispatch({
@@ -76,7 +75,6 @@ const PriceFilter = () => {
         max: updatedMax,
       },
     });
-    // setIsFiltering(true); // Set isFiltered to true when applying a filter
   };
 
   return (

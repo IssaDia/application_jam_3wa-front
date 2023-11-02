@@ -12,7 +12,6 @@ export function withApiMiddleware(interactor: any) {
         return result;
       }
     } catch (error: any) {
-      // Handle API errors
       throw new Error(error);
     }
   };

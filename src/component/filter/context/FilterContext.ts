@@ -141,7 +141,6 @@ export const filterReducer = (state: FilterState, action: FilterAction) => {
 
     case "FILTER_BY_SORT":
       const { field, order } = action.payload;
-      console.log(field, order);
 
       const sortedProducts = [...state.filteredProducts];
       sortedProducts.sort((a, b) => {

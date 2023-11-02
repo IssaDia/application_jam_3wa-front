@@ -4,7 +4,6 @@ import {
   AuthResponse,
   Product,
   RegistrationResponse,
-  PaymentMethod,
   Category,
 } from "./entities";
 
@@ -12,8 +11,6 @@ export interface AuthUseCase {
   login(email: string, password: string): Promise<AuthResponse>;
   register(data: User): Promise<RegistrationResponse>;
 }
-
-// export interface RegisterUseCase {}
 
 export interface ProductUseCase {
   getProducts(): Promise<Product[]>;
@@ -78,15 +75,15 @@ export class AuthUseCaseImpl implements AuthUseCase {
 }
 
 export interface PaymentUseCase {
-  handlePayment(paymentMethod: PaymentMethod): Promise<PaymentResponse>;
+  handlePayment(cart: Product[]): Promise<string>;
 }
 
 export class PaymentUseCaseImpl implements PaymentUseCase {
   constructor(private apiClient: ApiClient) {}
 
-  async handlePayment(paymentMethod: PaymentMethod): Promise<PaymentResponse> {
+  async handlePayment(cart: Product[]): Promise<string> {
     try {
-      const result = await this.apiClient?.handlePayment?.(paymentMethod);
+      const result = await this.apiClient?.handlePayment?.(cart);
 
       if (result) {
         return result;

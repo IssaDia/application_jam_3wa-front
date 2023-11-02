@@ -14,8 +14,12 @@ const Checkout = () => {
   const [paymentError, setPaymentError] = useState(null);
 
   const handlePayment = async (event: any) => {
+    let cartData;
     const cartDataJSON = localStorage.getItem("cart");
-    console.log(cartDataJSON);
+
+    if (cartDataJSON !== null) {
+      cartData = JSON.parse(cartDataJSON);
+    }
 
     event.preventDefault();
 
@@ -25,30 +29,24 @@ const Checkout = () => {
 
     setLoading(true);
 
-    const cardElement = await elements.getElement(CardElement);
-
-    console.log(cardElement, "cardElement");
-
     const paymentMethod: PaymentMethod = {
-      cardElement: cardElement,
+      cart: cartData,
     };
-
-    console.log(paymentMethod, "paymentMethod");
 
     try {
       const paymentApiClient = new PaymentApiClient();
       const paymenttUseCase = new PaymentUseCaseImpl(paymentApiClient);
 
-      const paymentResponse = await paymenttUseCase.handlePayment(
-        paymentMethod
-      );
+      const paymentResponse = await paymenttUseCase
+        .handlePayment(paymentMethod)
+        .then((data) => {
+          console.log(data);
+        });
 
-      // Handle the payment response, e.bg., show a success message
       console.log("Payment successful: ", paymentResponse);
 
       setLoading(false);
     } catch (error: any) {
-      // Handle payment error
       console.error("Payment error:", error);
       setPaymentError(error.message);
       setLoading(false);
@@ -116,7 +114,5 @@ const Checkout = () => {
     </div>
   );
 };
-
-// Calculate the total price of items in the cart
 
 export default Checkout;

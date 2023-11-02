@@ -6,7 +6,7 @@ const SortFilter = () => {
   const { filterDispatch } = useContext(FilterContext);
   const [sortOption, setSortOption] = useState("name_asc");
 
-  const { products, isFiltering, setIsFiltering } = useContext(ProductContext);
+  const { isFiltering, setIsFiltering } = useContext(ProductContext);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;

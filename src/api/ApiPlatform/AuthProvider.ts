@@ -11,7 +11,6 @@ class AuthApiClient implements ApiClient {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
         },
         body: JSON.stringify({ username, password }),
       }

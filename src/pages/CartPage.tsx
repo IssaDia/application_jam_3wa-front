@@ -1,16 +1,43 @@
 import { useContext } from "react";
 import { CartContext } from "../component/cart/context/CartContext";
 import { Link } from "react-router-dom";
+import PaymentApiClient from "../api/ApiPlatform/PaymentProvider";
+import { PaymentUseCaseImpl } from "../useCases/useCases";
 
 const CartPage = () => {
   const { cartState } = useContext(CartContext);
 
-  // Function to calculate the total price
   const calculateTotalPrice = () => {
     return cartState.cart.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
+  };
+
+  const handlePayment = async (event: any) => {
+    let cartData;
+    const cartDataJSON = localStorage.getItem("cart");
+
+    if (cartDataJSON !== null) {
+      cartData = JSON.parse(cartDataJSON);
+    }
+
+    event.preventDefault();
+
+    try {
+      const paymentApiClient = new PaymentApiClient();
+      const paymenttUseCase = new PaymentUseCaseImpl(paymentApiClient);
+
+      const paymentResponse: string = await paymenttUseCase.handlePayment(
+        cartData
+      );
+      console.log("Payment successful: ", paymentResponse);
+
+      window.location.replace(paymentResponse);
+      localStorage.removeItem("cart");
+    } catch (error: any) {
+      console.error("Payment error:", error);
+    }
   };
 
   return (
@@ -45,7 +72,10 @@ const CartPage = () => {
             Total Price: ${calculateTotalPrice()}
           </p>
           <Link to="/checkout">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">
+            <button
+              onClick={(e) => handlePayment(e)}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
+            >
               Checkout
             </button>
           </Link>

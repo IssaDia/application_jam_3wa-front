@@ -22,14 +22,6 @@ const ProductList = () => {
     return <p>No matches found</p>;
   }
 
-  // if (productState.isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (productState.isError) {
-  //   return <p>Error loading products</p>;
-  // }
-
   return (
     <div className="grid grid-cols-3 gap-4">
       {productsList.map((product) => (

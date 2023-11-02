@@ -27,13 +27,12 @@ export const apiRequest = async (
   try {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}${endpoint}`,
+
       requestOptions
     );
 
-    // Handle response (e.g., parsing JSON)
     const json = await response.json();
 
-    // Perform post-response actions (e.g., error handling, token refreshing)
     if (response.ok) {
       return json;
     } else {

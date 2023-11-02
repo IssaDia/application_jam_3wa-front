@@ -19,6 +19,8 @@ import { Product } from "./useCases/entities";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import CheckoutErrorPage from "./pages/CheckoutErrorPage";
+import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 
 const cartInitialState = {
   cart: JSON.parse(localStorage.getItem("cart") as string) || [],
@@ -89,6 +91,14 @@ const App = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route
+                      path="/checkout_error"
+                      element={<CheckoutErrorPage />}
+                    />
+                    <Route
+                      path="/checkout_success"
+                      element={<CheckoutSuccessPage />}
+                    />
                   </Routes>
                 </main>
               </BrowserRouter>

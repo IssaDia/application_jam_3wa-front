@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { CategoryUseCaseImpl } from "../useCases/useCases"; // Import the CategoryUseCase
-import { Category } from "../useCases/entities"; // Import the Category type
-import CategoryApiClient from "../api/ApiPlatform/CategoryProvider"; // Import the Category API client
+import { CategoryUseCaseImpl } from "../useCases/useCases";
+import { Category } from "../useCases/entities";
+import CategoryApiClient from "../api/ApiPlatform/CategoryProvider";
 
 const useFetchCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
