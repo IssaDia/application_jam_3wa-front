@@ -25,12 +25,14 @@ const cartInitialState = {
   cart: JSON.parse(localStorage.getItem("cart") as string) || [],
 };
 
-const authInitialState = {
-  token: null,
-  user: null,
-  isAuthenticated: false,
-};
+const storedToken = localStorage.getItem("token");
+const decodedUser = storedToken ? jwt_decode(storedToken) : null;
 
+const authInitialState = {
+  token: storedToken,
+  user: decodedUser,
+  isAuthenticated: !!storedToken,
+};
 const filterInitialState = {
   filteredProducts: [],
   categories: [],
@@ -53,10 +55,8 @@ const App = () => {
     setProducts(productsFromApi);
     setIsFiltering(true);
 
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      const decodedUser: any = jwt_decode(token);
+    if (authState.token) {
+      const decodedUser: any = jwt_decode(authState.token);
       const expirationTime = decodedUser.exp * 1000;
 
       if (expirationTime < Date.now()) {

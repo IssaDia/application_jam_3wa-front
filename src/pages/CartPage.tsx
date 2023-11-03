@@ -1,11 +1,12 @@
-import { useContext } from "react";
-import { CartContext } from "../component/cart/context/CartContext";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "../component/cart/context/CartContext";
 import PaymentApiClient from "../api/ApiPlatform/PaymentProvider";
 import { PaymentUseCaseImpl } from "../useCases/useCases";
 
 const CartPage = () => {
   const { cartState } = useContext(CartContext);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
 
   const calculateTotalPrice = () => {
     return cartState.cart.reduce(
@@ -24,18 +25,27 @@ const CartPage = () => {
 
     event.preventDefault();
 
-    try {
-      const paymentApiClient = new PaymentApiClient();
-      const paymenttUseCase = new PaymentUseCaseImpl(paymentApiClient);
+    // Check for the token in local storage
+    const token = localStorage.getItem("token");
 
-      const paymentResponse: string = await paymenttUseCase.handlePayment(
-        cartData
-      );
+    if (token) {
+      // User has a token, proceed with the payment
+      try {
+        const paymentApiClient = new PaymentApiClient();
+        const paymenttUseCase = new PaymentUseCaseImpl(paymentApiClient);
 
-      window.location.replace(paymentResponse);
-      localStorage.removeItem("cart");
-    } catch (error: any) {
-      console.error("Payment error:", error);
+        const paymentResponse: string = await paymenttUseCase.handlePayment(
+          cartData
+        );
+
+        window.location.replace(paymentResponse);
+        localStorage.removeItem("cart");
+      } catch (error: any) {
+        console.error("Payment error:", error);
+      }
+    } else {
+      // User does not have a token, show the login message
+      setShowLoginMessage(true);
     }
   };
 
@@ -70,14 +80,20 @@ const CartPage = () => {
           <p className="text-lg font-semibold">
             Total Price: ${calculateTotalPrice()}
           </p>
-          <Link to="/checkout">
-            <button
-              onClick={(e) => handlePayment(e)}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
-            >
-              Checkout
-            </button>
-          </Link>
+          <button
+            onClick={(e) => handlePayment(e)}
+            className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4"
+          >
+            Checkout
+          </button>
+          {showLoginMessage && (
+            <div>
+              <p className="text-red-600">
+                You need to be logged in to proceed with the payment.
+              </p>
+              <Link to="/login">Login</Link>
+            </div>
+          )}
         </div>
       )}
     </div>

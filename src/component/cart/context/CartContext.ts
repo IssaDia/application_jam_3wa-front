@@ -41,6 +41,8 @@ export const cartReducer = (
     case "ADD_TO_CART":
       const { product } = action.payload;
 
+      console.log(product);
+
       if (!state.cart || state.cart.length === 0) {
         const updatedCart = [{ ...product }];
         localStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -57,10 +59,12 @@ export const cartReducer = (
           item.id === product.id
             ? {
                 ...item,
-                quantity: item.quantity,
+                quantity: item.quantity + product.quantity,
               }
             : item
         );
+
+        console.log(updatedCart);
 
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         return {
