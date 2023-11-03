@@ -26,7 +26,6 @@ const Register = () => {
     email: string;
     password: string;
   }) => {
-    console.log(email, password);
     const newUser = {
       email,
       password,

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../catalog/products/context/ProductContext";
 import FilterContext from "./context/FilterContext";
 
@@ -8,17 +8,35 @@ const SortFilter = () => {
 
   const { isFiltering, setIsFiltering } = useContext(ProductContext);
 
+  useEffect(() => {
+    setIsFiltering(true);
+    filterDispatch({
+      type: "FILTER",
+      payload: {
+        filterTypeName: "sort",
+        arg: {
+          field: "name",
+          order: "asc",
+        },
+      },
+    });
+  }, []);
+
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setSortOption(value);
-    setIsFiltering(!isFiltering);
+    setIsFiltering(true);
+
     const [field, order] = value.split("_");
 
     filterDispatch({
-      type: "FILTER_BY_SORT",
+      type: "FILTER",
       payload: {
-        field,
-        order,
+        filterTypeName: "sort",
+        arg: {
+          field,
+          order,
+        },
       },
     });
   };

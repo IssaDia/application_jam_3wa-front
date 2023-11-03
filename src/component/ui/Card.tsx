@@ -1,7 +1,15 @@
 import { useState, useContext } from "react";
+import { Product } from "../../useCases/entities";
 import { CartContext } from "../cart/context/CartContext";
 
-const Card = ({ image, title, price, product }) => {
+type CardProps = {
+  image: string;
+  title: string;
+  price: number;
+  product: Product;
+};
+
+const Card = ({ image, title, price, product }: CardProps) => {
   const [quantity, setQuantity] = useState(0);
 
   const { cartDispatch } = useContext(CartContext);
@@ -16,9 +24,12 @@ const Card = ({ image, title, price, product }) => {
     }
   };
 
-  const handleAddToCart = (product, quantity) => {
+  const handleAddToCart = (product: Product, quantity: number) => {
     if (quantity > 0) {
-      cartDispatch({ type: "ADD_TO_CART", payload: { product, quantity } });
+      cartDispatch({
+        type: "ADD_TO_CART",
+        payload: { product: { ...product, quantity } },
+      });
     }
   };
 
@@ -27,7 +38,7 @@ const Card = ({ image, title, price, product }) => {
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <img
           src={`src/assets/images/products/${image}`}
-          alt={name}
+          alt={title}
           className="w-full h-48 object-cover object-center"
         />
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -48,7 +59,7 @@ const Card = ({ image, title, price, product }) => {
             <input
               type="number"
               value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
               className="border border-gray-300 text-center w-8 h-8"
             />
             <button

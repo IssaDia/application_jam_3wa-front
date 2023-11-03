@@ -31,7 +31,6 @@ const CartPage = () => {
       const paymentResponse: string = await paymenttUseCase.handlePayment(
         cartData
       );
-      console.log("Payment successful: ", paymentResponse);
 
       window.location.replace(paymentResponse);
       localStorage.removeItem("cart");

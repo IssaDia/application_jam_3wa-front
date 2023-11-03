@@ -5,15 +5,6 @@ import { Category } from "../../useCases/entities";
 import { ProductContext } from "../catalog/products/context/ProductContext";
 import FilterContext from "./context/FilterContext";
 
-enum Type {
-  INTENSE = "intense",
-  CONFITURE = "confiture",
-  GELEE = "gelee",
-  FRUITS_ROUGES = "fruits rouges",
-}
-
-type ProductType = keyof typeof Type;
-
 const TypeFilter = () => {
   const [enabled, setEnabled] = useState(false);
   const { filterDispatch } = useContext(FilterContext);
@@ -32,32 +23,19 @@ const TypeFilter = () => {
 
   const [selectedType, setSelectedType] = useState("");
 
-  useEffect(() => {
-    if (products.length > 0) {
-      setSelectedType("");
-    }
-    filterDispatch({
-      type: "FILTER_BY_TYPE",
-      payload: {
-        type: selectedType,
-      },
-    });
-  }, [products]);
-
   const handleSwitchChange = (checked: boolean) => {
     setEnabled(checked);
-    setIsFiltering(!isFiltering);
-    filterDispatch({
-      type: "FILTER_BY_TYPE",
-      payload: {
-        type: selectedType,
-      },
-    });
+    setIsFiltering(true);
 
     if (!checked) {
+      setSelectedType("");
       setIsFiltering(!isFiltering);
       filterDispatch({
-        type: "INITIALIZE_FILTER",
+        type: "FILTER",
+        payload: {
+          filterTypeName: "type",
+          arg: { selectedType: "" },
+        },
       });
     }
   };
@@ -67,9 +45,10 @@ const TypeFilter = () => {
 
     setSelectedType(selectedValue);
     filterDispatch({
-      type: "FILTER_BY_TYPE",
+      type: "FILTER",
       payload: {
-        type: selectedValue,
+        filterTypeName: "type",
+        arg: { selectedType: selectedValue },
       },
     });
   };

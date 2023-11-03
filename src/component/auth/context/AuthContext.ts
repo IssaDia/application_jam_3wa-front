@@ -40,7 +40,6 @@ export const authReducer = (
         isAuthenticated: true,
       };
     case "LOGOUT":
-      console.log("Logging out");
       localStorage.setItem("token", "");
 
       return {

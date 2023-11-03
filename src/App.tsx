@@ -2,7 +2,6 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import CheckoutPage from "./pages/CheckoutPage";
 import Navbar from "./component/nav/Navbar";
 import { useEffect, useReducer, useState } from "react";
 import { cartReducer, CartContext } from "./component/cart/context/CartContext";
@@ -52,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     setProducts(productsFromApi);
-    setIsFiltering(false);
+    setIsFiltering(true);
 
     const token = localStorage.getItem("token");
 
@@ -90,7 +89,6 @@ const App = () => {
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/checkout" element={<CheckoutPage />} />
                     <Route
                       path="/checkout_error"
                       element={<CheckoutErrorPage />}

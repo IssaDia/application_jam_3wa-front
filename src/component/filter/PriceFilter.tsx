@@ -36,10 +36,15 @@ const PriceFilter = () => {
     setEnabled(checked);
     setIsFiltering(!isFiltering);
     filterDispatch({
-      type: "FILTER_BY_PRICE",
+      type: "FILTER",
       payload: {
-        min: minimumPrice,
-        max: maximumPrice,
+        arg: {
+          price: {
+            min: minimumPrice,
+            max: maximumPrice,
+          },
+        },
+        filterTypeName: "price",
       },
     });
     if (!checked) {
@@ -69,10 +74,15 @@ const PriceFilter = () => {
     });
 
     filterDispatch({
-      type: "FILTER_BY_PRICE",
+      type: "FILTER",
       payload: {
-        min: updatedMin,
-        max: updatedMax,
+        arg: {
+          price: {
+            min: updatedMin,
+            max: updatedMax,
+          },
+        },
+        filterTypeName: "price",
       },
     });
   };

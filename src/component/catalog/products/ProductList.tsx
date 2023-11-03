@@ -1,12 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ProductContext } from "./context/ProductContext";
 import Card from "../../ui/Card";
 import FilterContext from "../../filter/context/FilterContext";
-
-const filterInitialState = {
-  filteredProducts: [],
-  categories: [],
-};
 
 const ProductList = () => {
   const { products, isFiltering } = useContext(ProductContext);

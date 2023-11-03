@@ -6,52 +6,39 @@ import {
   CategoryUseCaseImpl,
   ProductUseCaseImpl,
 } from "../../../useCases/useCases";
+import {
+  filterProductsByPrice,
+  filterProductsBySearch,
+  filterProductsByType,
+  sortProducts,
+} from "../../../utils/helpers";
+
+type FilterTypes = "search" | "sort" | "price" | "type";
 
 interface FilterState {
   categories: Category[];
   filteredProducts: Product[];
+  filterTypes: FilterTypes[];
 }
 
-type InitializeFilterAction = {
-  type: "INITIALIZE_FILTER";
-};
-
-type FilterBySortAction = {
-  type: "FILTER_BY_SORT";
+type FilterTypeAction = {
+  type: "FILTER";
   payload: {
-    field: string;
-    order: string;
+    filterTypeName: string;
+    arg?: {
+      selectedType?: string;
+      inputValue?: string;
+      price?: {
+        min: number;
+        max: number;
+      };
+      field?: string;
+      order?: string;
+    };
   };
 };
 
-type FilterByTypeAction = {
-  type: "FILTER_BY_TYPE";
-  payload: {
-    type?: string;
-  };
-};
-
-type FilterByPriceAction = {
-  type: "FILTER_BY_PRICE";
-  payload: {
-    min?: number;
-    max?: number;
-  };
-};
-
-type FilterBySearchAction = {
-  type: "FILTER_BY_SEARCH";
-  payload: {
-    inputValue?: string;
-  };
-};
-
-type FilterAction =
-  | InitializeFilterAction
-  | FilterByTypeAction
-  | FilterByPriceAction
-  | FilterBySearchAction
-  | FilterBySortAction;
+type FilterAction = FilterTypeAction;
 
 interface FilterContextType {
   filterState: FilterState;
@@ -70,103 +57,70 @@ const FilterContext = createContext<FilterContextType>({
   filterState: {
     filteredProducts: [],
     categories: categories,
+    filterTypes: [],
   },
   filterDispatch: () => {},
 });
 
 export const filterReducer = (state: FilterState, action: FilterAction) => {
+  let filterTypes: FilterTypes[] = [];
+  if (state.filterTypes) {
+    filterTypes = [...state.filterTypes];
+  }
   switch (action.type) {
-    case "INITIALIZE_FILTER":
-      return {
-        ...state,
-        categories: categories,
-      };
-
-    case "FILTER_BY_TYPE":
-      const { type } = action.payload;
-
-      if (type === "") {
-        return {
-          ...state,
-          filteredProducts: products["hydra:member"],
-        };
+    case "FILTER":
+      const { filterTypeName, arg } = action.payload;
+      if (!filterTypes.includes(filterTypeName as FilterTypes)) {
+        filterTypes.push(filterTypeName as FilterTypes);
       }
 
-      const productsByType: Product[] = [];
-
-      const categoryFiltered = categories["hydra:member"]?.filter(
-        (category: Category) => {
-          return category.name === type;
+      if (
+        action.type === "FILTER" &&
+        filterTypes.includes(filterTypeName as FilterTypes)
+      ) {
+        let updatedProducts = products["hydra:member"];
+        if (
+          filterTypes.includes(filterTypeName as FilterTypes) &&
+          arg?.selectedType
+        ) {
+          updatedProducts = filterProductsByType(
+            updatedProducts,
+            categories["hydra:member"],
+            arg.selectedType
+          );
+        } else if (
+          filterTypes.includes(filterTypeName as FilterTypes) &&
+          arg?.price
+        ) {
+          updatedProducts = filterProductsByPrice(
+            updatedProducts,
+            arg.price.min,
+            arg.price.max
+          );
+        } else if (
+          filterTypes.includes(filterTypeName as FilterTypes) &&
+          arg?.inputValue
+        ) {
+          updatedProducts = filterProductsBySearch(
+            updatedProducts,
+            arg.inputValue
+          );
         }
-      );
 
-      categoryFiltered?.forEach((category: Category) => {
-        const products = category.products;
-        products.forEach((product) => {
-          productsByType.push(product);
-        });
-      });
-
-      return {
-        ...state,
-        filteredProducts: productsByType,
-      };
-
-    case "FILTER_BY_PRICE":
-      const { min, max }: { min?: number; max?: number } = action.payload;
-
-      const productsByPrice = products["hydra:member"]?.filter(
-        (product: Product) => {
-          const price = product.price;
-
-          return price >= min && price <= max;
+        if (
+          filterTypes.includes(filterTypeName as FilterTypes) &&
+          arg?.field &&
+          arg?.order
+        ) {
+          updatedProducts = sortProducts(updatedProducts, arg.field, arg.order);
         }
-      );
-
-      return {
-        ...state,
-        filteredProducts: productsByPrice,
-      };
-
-    case "FILTER_BY_SEARCH":
-      const { inputValue } = action.payload;
-      let productsSearched = products?.filter((product: Product) => {
-        return product.name.toLowerCase().includes(inputValue?.toLowerCase());
-      });
-
-      return {
-        ...state,
-        filteredProducts: productsSearched,
-      };
-
-    case "FILTER_BY_SORT":
-      const { field, order } = action.payload;
-
-      const sortedProducts = [...state.filteredProducts];
-      sortedProducts.sort((a, b) => {
-        if (field === "name") {
-          if (order === "asc") {
-            return a.name.localeCompare(b.name);
-          } else {
-            return b.name.localeCompare(a.name);
-          }
-        } else if (field === "price") {
-          if (order === "asc") {
-            return a.price - b.price;
-          } else {
-            return b.price - a.price;
-          }
-        }
-        return 0;
-      });
-
-      console.log(sortedProducts);
-
-      return {
-        ...state,
-        filteredProducts: sortedProducts,
-      };
-
+        return {
+          ...state,
+          filteredProducts: updatedProducts,
+          filterTypes,
+        };
+      }
+      return state;
     default:
       return state;
   }

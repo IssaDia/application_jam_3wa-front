@@ -6,7 +6,7 @@ import useFetchProducts from "./useFetchProducts";
 const useSearch = () => {
   const productApiClient = new ProductApiClient();
   const productUseCase = new ProductUseCaseImpl(productApiClient);
-  const { products } = useFetchProducts(productUseCase);
+  const { products } = useFetchProducts();
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -16,7 +16,6 @@ const useSearch = () => {
     const filtered = products.filter((product: any) =>
       product.name.toLowerCase().includes(searchInput.toLowerCase())
     );
-    console.log(filtered);
     setFilteredProducts(filtered);
   }, [searchInput]);
 

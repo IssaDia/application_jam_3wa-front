@@ -4,13 +4,14 @@ import { ProductContext } from "../catalog/products/context/ProductContext";
 import FilterContext from "../filter/context/FilterContext";
 const Searchbar = () => {
   const { filterDispatch } = useContext(FilterContext);
-  const { products } = useContext(ProductContext);
+  const { setIsFiltering } = useContext(ProductContext);
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
+    setIsFiltering(true);
     filterDispatch({
       type: "FILTER",
-      payload: { inputValue, filter_type: "search" },
+      payload: { filterTypeName: "search", arg: { inputValue: inputValue } },
     });
   };
 

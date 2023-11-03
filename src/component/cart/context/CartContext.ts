@@ -1,23 +1,19 @@
 import { createContext } from "react";
 
-// Define a type for the cart item
 type CartItem = {
   id: number;
   name: string;
   price: number;
   quantity: number;
   image: string;
-  // Add other fields as needed
 };
 
-// Define a type for the cart state
 type CartState = {
   cart: CartItem[];
 };
 
-// Define a type for the cart action
 type CartAction =
-  | { type: "ADD_TO_CART"; payload: { product: CartItem; quantity: number } }
+  | { type: "ADD_TO_CART"; payload: { product: CartItem } }
   | { type: "REMOVE_FROM_CART"; payload: { product: CartItem } }
   | { type: "LOAD_CART"; payload: CartItem[] };
 
@@ -43,11 +39,10 @@ export const cartReducer = (
 ): CartState => {
   switch (action.type) {
     case "ADD_TO_CART":
-      const { product, quantity } = action.payload;
-      console.log(typeof quantity);
+      const { product } = action.payload;
 
       if (!state.cart || state.cart.length === 0) {
-        const updatedCart = [{ ...product, quantity }];
+        const updatedCart = [{ ...product }];
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         return {
           ...state,
@@ -62,7 +57,7 @@ export const cartReducer = (
           item.id === product.id
             ? {
                 ...item,
-                quantity: item.quantity + quantity,
+                quantity: item.quantity,
               }
             : item
         );
@@ -73,7 +68,7 @@ export const cartReducer = (
           cart: updatedCart,
         };
       }
-      const updatedCart = [...state.cart, { ...product, quantity: quantity }];
+      const updatedCart = [...state.cart, { ...product }];
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return {

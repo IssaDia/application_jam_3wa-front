@@ -9,6 +9,6 @@ type ProductContext = {
 
 export const ProductContext = createContext<ProductContext>({
   products: [],
-  isFiltering: false,
+  isFiltering: true,
   setIsFiltering: () => {},
 });
