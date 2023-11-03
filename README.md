@@ -55,6 +55,7 @@ Tout d'abord, React est un framework JavaScript très puissant et polyvalent qui
 
 ## Le plus gros challenge sur le projet
 
+- Organiser les données récupérées depuis l'API et les faire transitionner dans les composants 
 
 
 ## Feedback
@@ -98,7 +99,7 @@ et aller sur : http://localhost:5173/
 Pour lancer les tests:
 
 ```
-npm run test
+npm run unit:test
 ```
 
 ## 📑 A améliorer
