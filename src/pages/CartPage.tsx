@@ -51,9 +51,9 @@ const CartPage = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
+      <h2 className="text-2xl font-semibold mb-4">Votre panier</h2>
       {cartState.cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p>Votre panier est vide.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {cartState.cart.map((item) => (

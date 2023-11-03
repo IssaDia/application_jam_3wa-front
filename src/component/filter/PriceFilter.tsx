@@ -50,9 +50,6 @@ const PriceFilter = () => {
     if (!checked) {
       setIsFiltering(!isFiltering);
       setPriceRange({ min: minimumPrice, max: maximumPrice });
-      filterDispatch({
-        type: "INITIALIZE_FILTER",
-      });
     }
   };
 

@@ -14,7 +14,7 @@ const ProductList = () => {
   }
 
   if (isFiltering && filterState.filteredProducts.length === 0) {
-    return <p>No matches found</p>;
+    return <p>Il n'y a aucun résultat</p>;
   }
 
   return (

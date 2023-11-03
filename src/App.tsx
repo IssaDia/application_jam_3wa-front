@@ -14,7 +14,7 @@ import jwt_decode from "jwt-decode";
 import FilterContext, {
   filterReducer,
 } from "./component/filter/context/FilterContext";
-import { Product } from "./useCases/entities";
+import { Category, Product, User } from "./useCases/entities";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -30,12 +30,13 @@ const decodedUser = storedToken ? jwt_decode(storedToken) : null;
 
 const authInitialState = {
   token: storedToken,
-  user: decodedUser,
-  isAuthenticated: !!storedToken,
+  user: decodedUser as User,
+  isAuthenticated: !!storedToken as boolean,
 };
+
 const filterInitialState = {
-  filteredProducts: [],
-  categories: [],
+  filteredProducts: [] as Product[],
+  categories: [] as Category[],
 };
 
 const App = () => {
@@ -81,7 +82,6 @@ const App = () => {
               <BrowserRouter>
                 <nav>
                   <Navbar />
-                  {/* {test} */}
                 </nav>
                 <main>
                   <Routes>
