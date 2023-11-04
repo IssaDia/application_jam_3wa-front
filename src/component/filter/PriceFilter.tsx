@@ -34,7 +34,7 @@ const PriceFilter = () => {
 
   const handleSwitchChange = (checked: boolean) => {
     setEnabled(checked);
-    setIsFiltering(!isFiltering);
+    setIsFiltering(true);
     filterDispatch({
       type: "FILTER",
       payload: {
@@ -48,7 +48,7 @@ const PriceFilter = () => {
       },
     });
     if (!checked) {
-      setIsFiltering(!isFiltering);
+      setIsFiltering(false);
       setPriceRange({ min: minimumPrice, max: maximumPrice });
     }
   };
@@ -69,6 +69,8 @@ const PriceFilter = () => {
       min: updatedMin,
       max: updatedMax,
     });
+
+    setIsFiltering(true);
 
     filterDispatch({
       type: "FILTER",

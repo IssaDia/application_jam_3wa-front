@@ -35,7 +35,10 @@ const Card = ({ image, title, price, product }: CardProps) => {
 
   return (
     <div className="w-full p-4 cursor-pointer">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div
+        className="bg-white rounded-lg shadow-md overflow-hidden"
+        data-test="product-card"
+      >
         <img
           src={`src/assets/images/products/${image}`}
           alt={title}
@@ -65,6 +68,7 @@ const Card = ({ image, title, price, product }: CardProps) => {
             <button
               onClick={handleAdd}
               className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+              data-test="add-product-btn"
             >
               +
             </button>
@@ -72,6 +76,7 @@ const Card = ({ image, title, price, product }: CardProps) => {
           <button
             className="bg-blue-500 text-white px-4 py-2 ml-4 rounded-lg"
             onClick={() => handleAddToCart(product, quantity)}
+            data-test="add-product-cart-btn"
           >
             Ajouter
           </button>

@@ -33,7 +33,7 @@ const Navbar = () => {
             <NavLink to="/cart">
               <i className="fas fa-shopping-cart text-white text-2xl"></i>
             </NavLink>
-            <span className="text-white"> ({totalQuantity})</span>
+            <span className="text-white">({totalQuantity})</span>
             <button
               className="text-white hover:text-gray-300 bg-gray-800"
               onClick={() => authDispatch({ type: "LOGOUT" })}
@@ -52,7 +52,9 @@ const Navbar = () => {
             <NavLink to="/cart">
               <i className="fas fa-shopping-cart text-white text-2xl"></i>
             </NavLink>
-            <span className="text-white"> ({totalQuantity})</span>
+            <span className="text-white" data-test="cart-quantity">
+              ({totalQuantity})
+            </span>
           </>
         )}
       </div>
