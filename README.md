@@ -108,4 +108,4 @@ npm run unit:test
 
 - Améliorer la coordination entre les filtres
 - Mise en place de Docker pour faciliter l'accés à l'application
-- Ajouter des tests unitaires
+- Ajouter plus de tests unitaires et fonctionnels
