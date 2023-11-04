@@ -96,10 +96,16 @@ et aller sur : http://localhost:5173/
 
 ### 🧪 Lancer les tests
 
-Pour lancer les tests:
+Pour lancer les tests unitaires:
 
 ```
 npm run unit:test
+```
+
+Pour lancer les tests fonctionnels:
+
+```
+npm run cypress:test
 ```
 
 ## 📑 A améliorer
@@ -109,3 +115,4 @@ npm run unit:test
 - Améliorer la coordination entre les filtres
 - Mise en place de Docker pour faciliter l'accés à l'application
 - Ajouter plus de tests unitaires et fonctionnels
+- Automatisation des tests avec les actions Github
