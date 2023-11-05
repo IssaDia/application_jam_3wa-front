@@ -2,7 +2,7 @@
 
 Une application front React présentant un e-commerce de vente de pots de confiture
 
-# 📜 Summary
+# 📜 Sommaire
 
 - [Objectif](#-objectif)
 - [Construit avec](#-construit-avec)
@@ -105,12 +105,10 @@ npm run unit:test
 Pour lancer les tests fonctionnels:
 
 ```
-npm run cypress:test
+npm run e2e:test
 ```
 
 ## 📑 A améliorer
-
-### Filtres
 
 - Améliorer la coordination entre les filtres
 - Mise en place de Docker pour faciliter l'accés à l'application
