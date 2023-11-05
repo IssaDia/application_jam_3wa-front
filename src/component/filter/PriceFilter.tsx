@@ -13,7 +13,7 @@ const PriceFilter = () => {
 
   const { filterDispatch } = useContext(FilterContext);
 
-  const { products, isFiltering, setIsFiltering } = useContext(ProductContext);
+  const { products, setIsFiltering } = useContext(ProductContext);
 
   const minimumPrice = Math.min(...products.map((product) => product.price));
   const maximumPrice = Math.max(...products.map((product) => product.price));

@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "unit:test": "vitest",
+    "e2e:test": "npx cypress open",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
