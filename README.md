@@ -84,13 +84,14 @@ npm install ou npm i
 
 ### créer un fichier .env et fournir les différents accés
 
+```
 VITE_API_URL=http://localhost:8000/api
 VITE_API_USERNAME=admin@admin.com
 VITE_API_PASSWORD=ilovejam
 VITE_API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTgyMzY1NDAsImV4cCI6MTY5ODU5NjU0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluQGFkbWluLmNvbSJ9.UA6rtauPoJKERlGipD1l4dHR1dtGABI3WptCPftmJ1GYz3J-ou8dRatMbWr5cErtZfRpejd3GcMGFEjy2_ixWLCcoO3Mjyj7QR7E-T6Nj-kM9-DvYfXvZEDUHYK_-g-ryqSjcNKyxOBAHSa6JUPXQs7o405J7Hqv18k8ofOkp207N-SOxK8L9q534lSx90RwzhINRhPxwM8G3rPWtm_BYyJyD01MPFGbWN0Zr2ViZGF_CId8RVchjxLomHdppMjUzLPJDsN2JEpWVruwXIMF4YlQw7z4nOjHO58znDG9zxrUwSBYvVOmGj-FY2RSX6zbP_YkeKzh_9FWB_A3YWKXATD1tE6-VneOhDf9fkpNBcp-WD76gODaJBRpxP2QbC-90w6Rke2vF4D574XFp_nMeS3Rc0WPf6_e6NyVStwDFpJRLLGmiovcIOG4eAqb1BoEXMY_BUpXFfZROH4HKfdBqY6eGT-2IdKoa5G0RupuH3tQEw_xExi7IZpYmb18RnB0FvcWzXMQfklRRQzfSfvI8tcAMJsjEyd82DuNZSJ-tzwCDwQEiq0zIsIdONi4m47uwfJk9Q64VMbmZVg3SFkvVgQwfuRJSBdcBXK62b2jXNuFIAiDtI5yy3vkFUvXzpYimTv0byfqmX_12-EHpy_QsJfB_RNE7o50JOGGRdYDCp8
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
 VITE_STRIPE_API_KEY=sk_test_...
-
+```
 
 
 ### ♻️ Lancer l'application
@@ -104,6 +105,7 @@ npm run dev
 ```
 
 et aller sur : http://localhost:5173/
+PS: peut nécessiter de relancer une fois la page 
 
 ### 🧪 Lancer les tests
 
